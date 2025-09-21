@@ -9,7 +9,7 @@ public class DbConnect{
   public void connect()
   {
     try {
-      Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+      Class.forName("com.mysql.cj.jdbc.Driver");
       System.out.println("JDBC driver loaded");
     } catch (Exception err) 
     {
@@ -18,10 +18,12 @@ public class DbConnect{
       System.exit(0);
     }
     databaseConnection = null;
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-        String connectionUrl = "jdbc:sqlserver://sql.coccork.ie:8443;databaseName=DBComputerLog;encrypt=true;trustServerCertificate=true;user=dmytro.brodar@morrisonsislandcampus.com;password=10121991z";
+    try {
+        String connectionUrl = "jdbc:mysql://localhost:3306/computer_fault_logger";
+            String username = "root";
+            String password = "your_password";
       System.out.println(connectionUrl);
-      databaseConnection = DriverManager.getConnection(connectionUrl);
+      databaseConnection = DriverManager.getConnection(connectionUrl, username, password);
       System.out.println("Connected to the database");
             // Register a shutdown hook to close the connection
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -44,3 +46,4 @@ public class DbConnect{
 	  return databaseConnection;
   }
 }
+
